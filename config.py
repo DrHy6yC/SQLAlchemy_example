@@ -12,5 +12,9 @@ class URL:
     DB_NAME: str = os.getenv('DB_NAME')
 
     def get_dsn(self) -> str:
-        dsn = f"mysql+pymysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-        return dsn
+        dsn_self = f"mysql+mysqlconnector://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return dsn_self
+
+
+url = URL()
+dsn = url.get_dsn()
