@@ -1,48 +1,21 @@
 from icecream import ic
-from sqlalchemy import create_engine, select, MetaData, insert, Table
-from sqlalchemy.engine.base import Engine
+from database import get_engine, select_from_db
 
-from config import dsn
-from models import users_table, meta_data
-
-ic(dsn)
-
-
-def get_engine() -> Engine:
-    engine = create_engine(
-        url=dsn,
-        echo=True
-    )
-    return engine
-
-
-def create_table_engine(metadata: MetaData, engine: Engine) -> None:
-    engine.echo = False
-    metadata.drop_all(engine)
-    metadata.create_all(engine)
-    engine.echo = True
-
-
-def select_from_db(engine: Engine, user_table) -> None:
-    with engine.connect() as session:
-        sql_query = select(user_table)
-        res = session.execute(sql_query)
-        ic(res.all())
-
-
-def insert_to_db(engine: Engine, user_table: Table, values_list_dict: list) -> None:
-    with engine.connect() as session:
-        sql_query = insert(user_table).values(values_list_dict)
-        session.execute(sql_query)
-        session.commit()
-
+from models import users_table, quizzes_table, meta_data, UsersORM, QuizzesORM
+from orm import insert_data_list_to_bd, create_all_table
 
 if __name__ == "__main__":
-    values = [
-        {'USER_TG_ID': 343453, 'USER_FULL_NAME': 'ДИП', 'USER_LOGIN': 'др6с'},
-        {'USER_TG_ID': 4345321231, 'USER_FULL_NAME': 'ЛВП', 'USER_LOGIN': 'изипизи'}
-    ]
+    user_di = UsersORM(
+        user_tg_id=2312142232,
+        user_login='DI_hy6',
+        user_full_name='Di Cho Nah'
+    )
+    grammar_level_test = QuizzesORM(
+        quize_name='English Level test. Grammar',
+        quize_description='Тест для проверки уровня грамматики по английскому'
+    )
     engine_sql = get_engine()
-    create_table_engine(metadata=meta_data, engine=get_engine())
-    insert_to_db(engine_sql, users_table, values)
+    create_all_table(meta_data, engine_sql)
+    insert_data_list_to_bd([user_di, grammar_level_test])
     select_from_db(engine_sql, users_table)
+    select_from_db(engine_sql, quizzes_table)
