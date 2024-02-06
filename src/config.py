@@ -11,13 +11,15 @@ class Settings(BaseSettings):
     @property
     def DATABASE_URL_asyncpg(self):
         # postgresql+asyncpg://postgres:postgres@localhost:5432/sa
-        return f"mysql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql+aiomysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}" \
+               f"?charset=utf8mb4"
 
     @property
     def DATABASE_URL_psycopg(self):
         # DSN
-        # postgresql+psycopg://postgres:postgres@localhost:5432/sa
-        return f"mysql+psycopg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        # "mysql+pymysql://<username>:<password>@<host>/<dbname>'"
+        return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}" \
+               f"?charset=utf8mb4"
 
     model_config = SettingsConfigDict(env_file=".env")
 
