@@ -1,8 +1,8 @@
 from icecream import ic
-from database import get_engine, select_from_db
+from database import get_engine
 
-from models import users_table, quizzes_table, meta_data, UsersORM, QuizzesORM
-from orm import insert_data_list_to_bd, create_all_table
+from models import UsersORM, QuizzesORM
+from orm import insert_data_list_to_bd, create_all_table, select_from_db
 
 if __name__ == "__main__":
     user_di = UsersORM(
@@ -15,7 +15,8 @@ if __name__ == "__main__":
         quize_description='Тест для проверки уровня грамматики по английскому'
     )
     engine_sql = get_engine()
-    create_all_table(meta_data, engine_sql)
+    create_all_table(UsersORM, engine_sql)
+    create_all_table(QuizzesORM, engine_sql)
     insert_data_list_to_bd([user_di, grammar_level_test])
-    select_from_db(engine_sql, users_table)
-    select_from_db(engine_sql, quizzes_table)
+    select_from_db(UsersORM)
+    select_from_db(QuizzesORM)

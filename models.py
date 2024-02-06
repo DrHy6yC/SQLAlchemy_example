@@ -1,41 +1,21 @@
-from sqlalchemy import Table, Column, Integer, BigInteger, String, MetaData
-from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
+from sqlalchemy import BigInteger, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from database import Base
-
-meta_data = MetaData()
-
-users_table = Table(
-    "USERS",
-    meta_data,
-    Column("ID", Integer, primary_key=True),
-    Column("USER_TG_ID", BigInteger),
-    Column("USER_FULL_NAME", String(250)),
-    Column("USER_LEVEL", Integer, default=0),
-    Column("USER_ACCESS", Integer, default=0),
-    Column("USER_LOGIN", String(50))
-)
-
-
-quizzes_table = Table(
-    "QUIZZES",
-    meta_data,
-    Column("ID", Integer, primary_key=True),
-    Column("QUIZE_NAME", String(250)),
-    Column("QUIZE_DESCRIPTION", String(500))
-)
 
 
 class UsersORM(Base):
     __tablename__ = 'USERS'
+    id: Mapped[int] = mapped_column(primary_key=True)
     user_tg_id: Mapped[int] = mapped_column(BigInteger)
-    user_login: Mapped[str]
-    user_full_name: Mapped[str]
-    user_level: Mapped[int] = mapped_column(default=0)
-    user_access: Mapped[int] = mapped_column(default=0)
+    user_login: Mapped[str] = mapped_column(String(250))
+    user_full_name: Mapped[str] = mapped_column(String(50))
+    user_level: Mapped[int] = mapped_column(server_default='0')
+    user_access: Mapped[int] = mapped_column(server_default='0')
 
 
 class QuizzesORM(Base):
     __tablename__ = 'QUIZZES'
-    quize_name: Mapped[str]
-    quize_description: Mapped[str]
+    id: Mapped[int] = mapped_column(primary_key=True)
+    quize_name: Mapped[str] = mapped_column(String(50))
+    quize_description: Mapped[str] = mapped_column(String(250))
