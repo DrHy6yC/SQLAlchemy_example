@@ -13,7 +13,7 @@ class DBMYSQL:
     DB_NAME: str = getenv('DB_NAME')
 
     def get_dsn(self) -> str:
-        dsn_self = f"mysql+mysql connector://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        dsn_self = f"mysql+mysqlconnector://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         return dsn_self
 
     def get_db_is_created(self) -> bool:

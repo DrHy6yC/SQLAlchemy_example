@@ -25,3 +25,4 @@ class QuizzesORM(Base):
 
 class UserQuizzesORM(Base):
     __tablename__ = 'USER_QUIZZES'
+    id: Mapped[int] = mapped_column(primary_key=True)
