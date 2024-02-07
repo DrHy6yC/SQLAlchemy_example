@@ -1,12 +1,13 @@
 from icecream import ic
 
-from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert, text
+from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert, event, DDL, text
+
 from sqlalchemy.engine.base import Engine
 # Альтернатива orm
 
 
 # Функции
-def select_from_db(engine: Engine, table: Table) -> None:
+def select_table_from_db(engine: Engine, table: Table) -> None:
     with engine.connect() as session:
         sql_query = select(table)
         res_query = session.execute(sql_query)
@@ -26,6 +27,12 @@ def create_all_table(metadata: MetaData, engine: Engine) -> None:
     metadata.drop_all(engine)
     metadata.create_all(engine)
     engine.echo = True
+
+
+def execute_any_query(engine: Engine, query: str) -> None:
+    with engine.connect() as session:
+        session.execute(text(query))
+        session.commit()
 
 
 # Модели
@@ -50,3 +57,12 @@ quizzes_table = Table(
     Column("QUIZE_NAME", String(250)),
     Column("QUIZE_DESCRIPTION", String(500))
 )
+
+
+TRIGGER_USERS_AFTER_UPDATE = """
+    CREATE DEFINER = CURRENT_USER TRIGGER Example.USERS_AFTER_UPDATE BEFORE UPDATE
+    ON USERS FOR EACH ROW
+    BEGIN
+        SET NEW.user_edit_time = current_timestamp();
+    END
+    """

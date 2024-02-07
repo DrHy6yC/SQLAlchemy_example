@@ -1,4 +1,6 @@
-from sqlalchemy import BigInteger, String
+import datetime
+
+from sqlalchemy import BigInteger, String, func
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
 
@@ -14,6 +16,8 @@ class UsersORM(Base):
     user_full_name: Mapped[str] = mapped_column(String(50))
     user_level: Mapped[int] = mapped_column(server_default='0')
     user_access: Mapped[int] = mapped_column(server_default='0')
+    user_create_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    user_edit_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
 
 class QuizzesORM(Base):
