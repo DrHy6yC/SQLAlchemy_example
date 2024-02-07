@@ -1,7 +1,9 @@
 from sqlalchemy import BigInteger, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
-from database import Base
+
+class Base(DeclarativeBase):
+    pass
 
 
 class UsersORM(Base):

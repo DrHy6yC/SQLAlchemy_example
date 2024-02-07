@@ -1,13 +1,13 @@
 from icecream import ic
 from sqlalchemy import Engine, select
-from database import session_sql_connect, Base
+from config import session_sql_connect
+from models import Base
 
 
-def create_all_table(base: Base, engine: Engine) -> None:
-    engine.echo = False
-    base.metadata.drop_all(engine)
-    base.metadata.create_all(engine)
-    engine.echo = True
+def create_all_table(engine: Engine) -> None:
+    ic()
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
 
 
 def insert_data_list_to_bd(list_data: list):

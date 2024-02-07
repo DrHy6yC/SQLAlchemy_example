@@ -1,20 +1,21 @@
-import os
-from dotenv import load_dotenv
+from icecream import ic
 
-load_dotenv()
+from sqlalchemy import create_engine
+from sqlalchemy.engine.base import Engine
+from sqlalchemy.orm import sessionmaker
 
-
-class URL:
-    DB_HOST: str = os.getenv('DB_HOST')
-    DB_PORT: int = os.getenv('DB_PORT')
-    DB_USER: str = os.getenv('DB_USER')
-    DB_PASS: str = os.getenv('DB_PASS')
-    DB_NAME: str = os.getenv('DB_NAME')
-
-    def get_dsn(self) -> str:
-        dsn_self = f"mysql+mysqlconnector://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-        return dsn_self
+from database import DBMYSQL
 
 
-url = URL()
-dsn = url.get_dsn()
+def get_engine(dsn_db) -> Engine:
+    engine = create_engine(
+        url=dsn_db,
+        echo=True
+    )
+    return engine
+
+
+db_mysql = DBMYSQL()
+dsn = db_mysql.get_dsn()
+sql_engine = get_engine(dsn)
+session_sql_connect = sessionmaker(sql_engine)

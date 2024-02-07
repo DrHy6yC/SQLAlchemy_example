@@ -8,8 +8,9 @@ from sqlalchemy.engine.base import Engine
 def select_from_db(engine: Engine, name_table) -> None:
     with engine.connect() as session:
         sql_query = select(name_table)
-        res = session.execute(sql_query)
-        ic(res.all())
+        res_query = session.execute(sql_query)
+        result = res_query.all()
+        ic(result)
 
 
 def insert_to_db(engine: Engine, user_table: Table, values_list_dict: list) -> None:
