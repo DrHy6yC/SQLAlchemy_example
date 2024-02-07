@@ -20,7 +20,7 @@ if __name__ == "__main__":
     if db_mysql.get_db_is_created():
         create_all_table(sql_engine)
         execute_any_query(sql_engine, TRIGGER_USERS_AFTER_UPDATE)
-    # insert_data_list_to_bd([user_di, grammar_level_test])
-    # user_di = select_from_db(UsersORM)[0]
-    # select_from_db(QuizzesORM)
-    # update_object(user_di, 'er4r3dewdew')
+    insert_data_list_to_bd([user_di, grammar_level_test])
+    user_di = select_from_db(UsersORM)[0]
+    select_from_db(QuizzesORM)
+    update_object(user_di, 'er4r3dewdew')

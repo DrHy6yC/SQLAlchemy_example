@@ -25,35 +25,37 @@ class Base(DeclarativeBase):
     Note:
         При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
     """
+
     pass
 
 
 class UsersORM(Base):
     """Класс Юзеров телеграмма
 
-    Хранит информацию полeченную из тг
+    Хранит информацию о пользователе полученную из тг
 
     Note:
+        USER_TG_ID не всегда помещается в int, приходиться использовать bigint
         !При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
 
     Attributes
     ----------
     ID:
-        ид в бд
+        ИД в БД
     USER_TG_ID:
-        ид в тг
+        Ид в тг
     USER_LOGIN
-        логин в тг
+        Логин в тг
     USER_FULL_NAME
-        полное имя из тг
+        Полное имя фамилия из тг
     USER_LEVEL:
-        уровень который определяется после прохождения теста English Level test. Grammar
+        Уровень который определяется после прохождения теста English Level test. Grammar
     USER_ACCESS:
-        уровень доступа (Админ, Учитель, Пользователь)
+        Уровень доступа (Админ, Учитель, Пользователь)
     USER_CREATE_TIME:
-        дата внесения пользователя в БД
+        Дата внесения пользователя в БД
     USER_UPDATE_TIME:
-        дата изменения данных пользователя
+        Дата изменения данных пользователя
     """
     __tablename__ = 'USERS'
     ID: Mapped[int_pk]
@@ -66,10 +68,27 @@ class UsersORM(Base):
     USER_UPDATE_TIME: Mapped[date_now]
 
 
+# TODO тригер меняющий QUIZE_UPDATE_TIME при изменении таблиц (QUIZE_QUESTIONS, QUIZE_ANSWERS, QUIZE_TRUE_ANSWERS)
 class QuizzesORM(Base):
+    """ Класс Опросника где находятся название теста и их описание
+
+    Note:
+        При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
+
+    Attributes
+    ----------
+    ID:
+        ИД в БД
+    QUIZE_NAME:
+        Имя теста
+    QUIZE_DESCRIPTION:
+        Описание теста
+    QUIZE_CREATE_TIME:
+        Дата и время создания опросника
+    QUIZE_UPDATE_TIME:
+        Дата и время изменения опросника
     """
-    При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
-    """
+
     __tablename__ = 'QUIZZES'
     ID: Mapped[int_pk]
     QUIZE_NAME: Mapped[str_50]
@@ -79,9 +98,26 @@ class QuizzesORM(Base):
 
 
 class QuizeQuestionsORM(Base):
+    """ Класс с вопросами опросника
+    Note:
+        При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
+
+    Attributes
+    ----------
+    ID:
+        ИД в БД
+    ID_QUIZE:
+        ИД опросника в таблице QUIZZES
+    QUESTION_NUMBER:
+        Номер вопроса
+    QUESTION_TEXT:
+        Текст вопроса
+    QUESTION_CREATE_TIME:
+        Дата и время создания вопроса
+    QUESTION_UPDATE_TIME:
+        Дата и время изменения вопроса
     """
-    При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
-    """
+
     __tablename__ = 'QUIZE_QUESTIONS'
     ID: Mapped[int_pk]
     ID_QUIZE: Mapped[int] = mapped_column(ForeignKey('QUIZZES.ID', ondelete='CASCADE', onupdate='CASCADE'))
@@ -95,6 +131,7 @@ class QuizeAnswersORM(Base):
     """
     При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
     """
+
     __tablename__ = 'QUIZE_ANSWERS'
     ID: Mapped[int_pk]
     ID_QUIZE: Mapped[int] = mapped_column(ForeignKey('QUIZZES.ID', ondelete='CASCADE', onupdate='CASCADE'))
@@ -109,15 +146,40 @@ class QuizeStatusesORM(Base):
     """
     При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
     """
+
     __tablename__ = 'QUIZE_STATUSES'
     ID: Mapped[int_pk]
     STATUS_TEXT: Mapped[str_50]
 
 
 class UserQuizzesORM(Base):
+    """ Класс запущенных пользователем тестов, каждый запущеный тест будет новой строкой в бд и новым объектом класса
+
+    Note:
+        При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
+
+    Attributes
+    ----------
+    ID:
+        ИД в БД
+    ID_USER:
+        ИД пользователя запустившего тест
+    ID_QUIZE:
+        ИД теста который запустил пользователь
+    QUIZE_STATUS:
+        Описывает в каком статусе сейчас тест
+    QUESTION_NUMBER:
+        Номер вопроса на котором остановился пользователь
+    ID_ANSWER_LAST:
+        Последний ответ пользователя
+    QUIZE_SCORE:
+        Кол-во очков которое получил пользователь за правильные ответы
+    CREATE_TIME:
+    Дата и время создания теста
+    UPDATE_TIME:
+    Дата и время изменения теста
     """
-    При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
-    """
+
     __tablename__ = 'USER_QUIZZES'
     ID: Mapped[int_pk]
     ID_USER: Mapped[int] = mapped_column(ForeignKey('USERS.ID', ondelete='CASCADE', onupdate='CASCADE'))
@@ -128,4 +190,3 @@ class UserQuizzesORM(Base):
     QUIZE_SCORE: Mapped[int]
     CREATE_TIME: Mapped[date_now]
     UPDATE_TIME: Mapped[date_now]
-

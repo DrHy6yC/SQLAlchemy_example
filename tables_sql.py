@@ -1,6 +1,6 @@
 from icecream import ic
 
-from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert, event, DDL, text
+from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert, text
 
 from sqlalchemy.engine.base import Engine
 # Альтернатива orm
