@@ -5,7 +5,12 @@ from sqlalchemy.orm import sessionmaker
 from database import DBMYSQL
 
 
-def get_engine(dsn_db) -> Engine:
+def get_engine(dsn_db: str) -> Engine:
+    """
+    Функция запуска главного движка sql/подключения
+    :param dsn_db: Принимает в себя строку подключения
+    :return: возвращает экземпляр класса Engine из sqlalchemy.engine.base
+    """
     engine = create_engine(
         url=dsn_db,
         echo=True
