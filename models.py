@@ -1,6 +1,3 @@
-"""
-При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
-"""
 import datetime
 from typing import Annotated
 
@@ -138,6 +135,20 @@ class QuizeAnswersORM(Base):
     QUESTION_NUMBER: Mapped[int]
     ANSWER_NUMBER: Mapped[int]
     ANSWER_TEXT: Mapped[str_512]
+    ANSWER_CREATE_TIME: Mapped[date_now]
+    ANSWER_UPDATE_TIME: Mapped[date_now]
+
+
+class QuizeTrueAnswersORM(Base):
+    """
+    При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
+    """
+
+    __tablename__ = 'QUIZE_TRUE_ANSWERS'
+    ID: Mapped[int_pk]
+    ID_QUIZE: Mapped[int] = mapped_column(ForeignKey('QUIZZES.ID', ondelete='CASCADE', onupdate='CASCADE'))
+    ID_ANSWER: Mapped[int] = mapped_column(ForeignKey('QUIZE_ANSWERS.ID', ondelete='CASCADE', onupdate='CASCADE'))
+    QUESTION_NUMBER: Mapped[int]
     ANSWER_CREATE_TIME: Mapped[date_now]
     ANSWER_UPDATE_TIME: Mapped[date_now]
 

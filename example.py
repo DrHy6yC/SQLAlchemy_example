@@ -23,4 +23,6 @@ if __name__ == "__main__":
     insert_data_list_to_bd([user_di, grammar_level_test])
     user_di = select_from_db(UsersORM)[0]
     select_from_db(QuizzesORM)
-    update_object(user_di, 'er4r3dewdew')
+    update_object(user_di, '93_Di~ME4EHbIN`_23RUS')
+    user_di = select_from_db(UsersORM)[0]
+    ic(user_di.USER_LOGIN)

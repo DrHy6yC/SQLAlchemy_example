@@ -35,5 +35,5 @@ def select_from_db(class_orm: Type[UsersORM] | Type[QuizzesORM]) -> list:
 def update_object(object_orm, new_user_param: str) -> None:
     with session_sql_connect() as session_sql:
         object_orm = session_sql.get(object_orm.__class__, object_orm.ID)
-        object_orm.user_login = new_user_param
+        object_orm.USER_LOGIN = new_user_param
         session_sql.commit()
