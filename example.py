@@ -4,6 +4,8 @@ from config import sql_engine
 from models import UsersORM, QuizzesORM
 from orm import insert_data_list_to_bd, create_all_table, select_from_db
 
+import tables_sql
+
 if __name__ == "__main__":
     user_di = UsersORM(
         user_tg_id=2312142232,
@@ -19,3 +21,4 @@ if __name__ == "__main__":
     insert_data_list_to_bd([user_di, grammar_level_test])
     select_from_db(UsersORM)
     select_from_db(QuizzesORM)
+    tables_sql.select_from_db(sql_engine, tables_sql.users_table)

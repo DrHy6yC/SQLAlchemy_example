@@ -1,14 +1,14 @@
 from icecream import ic
 
-from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert
+from sqlalchemy import MetaData, Table, Column, Integer, BigInteger, String, select, insert, text
 from sqlalchemy.engine.base import Engine
 # Альтернатива orm
 
 
 # Функции
-def select_from_db(engine: Engine, name_table) -> None:
+def select_from_db(engine: Engine, table: Table) -> None:
     with engine.connect() as session:
-        sql_query = select(name_table)
+        sql_query = select(table)
         res_query = session.execute(sql_query)
         result = res_query.all()
         ic(result)
