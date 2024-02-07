@@ -21,3 +21,7 @@ class QuizzesORM(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     quize_name: Mapped[str] = mapped_column(String(50))
     quize_description: Mapped[str] = mapped_column(String(250))
+
+
+class UserQuizzesORM(Base):
+    __tablename__ = 'USER_QUIZZES'

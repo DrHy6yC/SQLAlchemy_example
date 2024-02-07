@@ -1,5 +1,3 @@
-from icecream import ic
-
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import sessionmaker
@@ -15,6 +13,7 @@ def get_engine(dsn_db) -> Engine:
     return engine
 
 
+# sync
 db_mysql = DBMYSQL()
 dsn = db_mysql.get_dsn()
 sql_engine = get_engine(dsn)

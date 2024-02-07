@@ -5,6 +5,7 @@ from sqlalchemy.engine.base import Engine
 # Альтернатива orm
 
 
+# Функции
 def select_from_db(engine: Engine, name_table) -> None:
     with engine.connect() as session:
         sql_query = select(name_table)
@@ -27,6 +28,7 @@ def create_all_table(metadata: MetaData, engine: Engine) -> None:
     engine.echo = True
 
 
+# Модели
 meta_data = MetaData()
 
 users_table = Table(

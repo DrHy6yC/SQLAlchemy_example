@@ -1,5 +1,3 @@
-from icecream import ic
-
 from config import db_mysql
 from config import sql_engine
 
