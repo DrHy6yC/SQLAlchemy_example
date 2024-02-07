@@ -30,6 +30,12 @@ def create_all_table(metadata: MetaData, engine: Engine) -> None:
 
 
 def execute_any_query(engine: Engine, query: str) -> None:
+    """
+    Функция для выполнения набора sql-команд на базе с комитом
+    :param engine: принимает sql_engine/подключение
+    :param query: принимает sql-выражение в виде текста
+    :return: ничего не возвращает
+    """
     with engine.connect() as session:
         session.execute(text(query))
         session.commit()
@@ -63,6 +69,6 @@ TRIGGER_USERS_AFTER_UPDATE = """
     CREATE DEFINER = CURRENT_USER TRIGGER Example.USERS_AFTER_UPDATE BEFORE UPDATE
     ON USERS FOR EACH ROW
     BEGIN
-        SET NEW.user_edit_time = current_timestamp();
+        SET NEW.USER_UPDATE_TIME = current_timestamp();
     END
     """
