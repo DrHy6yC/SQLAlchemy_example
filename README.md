@@ -11,5 +11,5 @@
 
 Модуль создается для работы с БД и ботом telegram на aiogram
 
-(1) Пока что из коробки работает с MySQL, SQLite и PostgresSQL(не проверял, копипаст с GitHub)
+(1) Пока что из коробки работает с MySQL, SQLite и PostgresSQL
 для работы с другими СУБД необходимо дополнить метод get_dsn() driver и db_params для класса DBMYSQL из database.py
