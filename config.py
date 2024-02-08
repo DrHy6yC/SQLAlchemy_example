@@ -34,7 +34,7 @@ def get_async_engine(async_dsn_db: str) -> AsyncEngine:
 
 db_mysql = DBMYSQL()
 # sync
-dsn = db_mysql.get_lite_dsn()#db_mysql.get_dsn()
+dsn = db_mysql.get_dsn()
 sql_engine = get_engine(dsn)
 session_sql_connect = sessionmaker(sql_engine)
 
