@@ -32,6 +32,11 @@ def create_all_table(metadata: MetaData, engine: Engine) -> None:
 def execute_any_query(engine: Engine, query: str) -> None:
     """
     Функция для выполнения набора sql-команд на базе с комитом
+
+    NOTE:
+        При смене диалекта SQL нужно учитывать что конкретный запрос не  обработанный sqlalshemy
+        могут не выполняться на других БД
+
     :param engine: принимает sql_engine/подключение
     :param query: принимает sql-выражение в виде текста
     :return: ничего не возвращает
