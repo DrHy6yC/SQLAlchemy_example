@@ -23,7 +23,11 @@ class Base(DeclarativeBase):
         При создании в классе ForeignKey обратить внимание что имена колонок регистрозависимые!
     """
 
-    pass
+    type_annotation = {
+        str_50: String(50),
+        str_256: String(256),
+        str_512: String(512)
+    }
 
 
 class UsersORM(Base):
